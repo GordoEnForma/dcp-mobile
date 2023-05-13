@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "608385181374",
+    "project_id": "dcp-tp2",
+    "storage_bucket": "dcp-tp2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608385181374:android:b583fc0b99a7650d6c60ef",
+        "android_client_info": {
+          "package_name": "com.skincancerdetectionapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608385181374-tjcoqgpsarbta6364vkdqap485rj9e2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK562y_pUr6IlGP47DqVP6KDCcleUVWKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608385181374-fnb55fs1nau850bg0bm10721qe1mbs7p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

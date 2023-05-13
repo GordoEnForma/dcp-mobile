@@ -26,11 +26,21 @@ export interface RootTabParamList extends ParamListBase {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const DiagnosisStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="DiagnosisStack" component={DiagnosisScreen} />
+  <Stack.Navigator screenOptions={{}}>
+    <Stack.Screen
+      name="DiagnosisList"
+      component={DiagnosisScreen}
+      options={{
+        headerTitle: 'Diagnosticos',
+      }}
+    />
     <Stack.Screen
       name="DiagnosisDetailPage"
       component={DiagnosisDetailScreen}
+      options={{
+        headerTitle: 'Detalle de Diagnóstico',
+        headerBackTitle: 'Diagnósticos',
+      }}
     />
   </Stack.Navigator>
 );
@@ -49,7 +59,7 @@ const tabScreenConfigs = [
     ),
   },
   {
-    name: 'Diagnosis',
+    name: 'Diagnosticos',
     component: DiagnosisStack,
     label: 'Diagnósticos',
     icon: (props: {focused: boolean; color: string; size: number}) => (

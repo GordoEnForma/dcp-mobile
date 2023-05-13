@@ -26,6 +26,7 @@ export const TabScreenWrapper: React.FC<TabScreenWrapperProps> = ({
           name={config.name}
           component={config.component}
           options={{
+            headerShown: config.name === 'Diagnosticos' ? false : true,
             tabBarLabel: config.label,
             tabBarIcon: config.icon,
           }}

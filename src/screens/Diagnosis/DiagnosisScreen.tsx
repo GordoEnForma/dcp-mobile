@@ -1,32 +1,10 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  ListRenderItem,
-} from 'react-native';
+import {View, FlatList, StyleSheet, ListRenderItem, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Picker} from '@react-native-picker/picker';
-
-interface DiagnosisData {
-  id: string;
-  state: 'Pendiente' | 'Completado';
-  created_at: Date;
-  photo_url: string;
-  diagnosis?: {
-    result: string;
-    probability: number;
-    severity: string;
-  };
-}
-
-interface DiagnosisItemProps {
-  diagnosis: DiagnosisData;
-  onPress: () => void;
-}
+import {DiagnosisData} from '../../types/diagnosis';
+import {DiagnosisItem} from '../../components/DiagnosisItem';
+import {useDiagnostics} from '../../hooks/useDiagnostics';
 
 const diagnosisData: DiagnosisData[] = [
   // Create 10 diagnosis data with state 'Pendiente' and 'Completado' without using ...Array.from()
@@ -44,36 +22,37 @@ const diagnosisData: DiagnosisData[] = [
     photo_url:
       'https://www.cdc.gov/healthypets/images/pets/cute-dog-headshot.jpg',
   },
+  {
+    id: '3',
+    state: 'Completado',
+    created_at: new Date(2021, 1, 3),
+    photo_url:
+      'https://www.cdc.gov/healthypets/images/pets/cute-dog-headshot.jpg',
+    diagnosis: {
+      result: 'Result 3',
+      probability: 0.3,
+      severity: 'Severity 3',
+    },
+  },
+  {
+    id: '4',
+    state: 'Completado',
+    created_at: new Date(2021, 1, 4),
+    photo_url:
+      'https://www.cdc.gov/healthypets/images/pets/cute-dog-headshot.jpg',
+    diagnosis: {
+      result: 'Result 2',
+      probability: 0.56,
+      severity: 'Severity 1',
+    },
+  },
 ];
-
-const DiagnosisItem: React.FC<DiagnosisItemProps> = ({diagnosis, onPress}) => {
-  const {
-    state,
-    created_at,
-    photo_url,
-    diagnosis: {result, probability, severity} = {},
-  } = diagnosis;
-
-  return (
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-      <Image source={{uri: photo_url}} style={styles.thumbnail} />
-      <View style={styles.itemText}>
-        <Text style={styles.title}>{state}</Text>
-        <Text style={styles.date}>{created_at.toLocaleDateString()}</Text>
-        {result && <Text style={styles.result}>Resultado: {result}</Text>}
-        {probability && (
-          <Text style={styles.probability}>Probabilidad: {probability}</Text>
-        )}
-        {severity && <Text style={styles.severity}>Severidad: {severity}</Text>}
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 export const DiagnosisScreen: React.FC = () => {
   const [filter, setFilter] = useState('Todos');
   const [sortKey, setSortKey] = useState<keyof DiagnosisData>('created_at');
   const navigation = useNavigation();
+  const {diagnosticsQuery} = useDiagnostics();
 
   const compareDiagnosisData = useCallback(
     (a: DiagnosisData, b: DiagnosisData) => {
@@ -116,6 +95,10 @@ export const DiagnosisScreen: React.FC = () => {
     [navigation],
   );
 
+  if (diagnosticsQuery.isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <View style={styles.container}>
       <Picker
@@ -151,40 +134,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    gap: 10,
   },
   picker: {
-    width: '50%',
+    alignSelf: 'flex-end',
     backgroundColor: 'white',
-  },
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
+    margin: 10,
     paddingHorizontal: 10,
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderColor: '#eee',
-  },
-  thumbnail: {
-    width: 150,
-    height: 100,
-  },
-  itemText: {
-    marginLeft: 10,
-  },
-  title: {
-    fontWeight: 'bold',
-  },
-  date: {
-    color: '#999',
-  },
-  result: {
-    color: '#333',
-  },
-  probability: {
-    color: '#555',
-  },
-  severity: {
-    color: '#777',
+    marginHorizontal: 20,
+    width: 200,
   },
 });
