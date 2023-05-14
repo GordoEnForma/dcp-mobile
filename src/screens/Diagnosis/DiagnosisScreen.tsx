@@ -98,9 +98,10 @@ export const DiagnosisScreen: React.FC = () => {
   if (diagnosticsQuery.isLoading) {
     return <Text>Loading...</Text>;
   }
-
+  console.log(diagnosticsQuery.data);
   return (
     <View style={styles.container}>
+      {diagnosticsQuery.isLoading ? <Text>Loading...</Text> : <Text>Aea</Text>}
       <Picker
         selectedValue={filter}
         style={styles.picker}
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     backgroundColor: 'white',
     margin: 10,
+    color: 'black',
     paddingHorizontal: 10,
     marginHorizontal: 20,
     width: 200,

@@ -6,8 +6,10 @@ import {
   MediaType,
   CameraOptions,
 } from 'react-native-image-picker';
+import {useAuth} from '../../hooks/useAuth';
 
 export const HomeScreen = () => {
+  const {data: user, isLoading} = useAuth();
   const options: CameraOptions = {
     mediaType: 'photo' as MediaType,
     quality: 1,
@@ -38,6 +40,12 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      <View>
+        <Text style={styles.text}>Bienvenido</Text>
+        <Text style={styles.textName}>
+          {user?.email ? `${user.displayName}` : ''}
+        </Text>
+      </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={takePhoto} style={styles.button}>
           <Text style={styles.buttonText}>Tomar una foto</Text>
@@ -59,9 +67,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  text: {
+    fontSize: 40,
+    fontWeight: '300',
+    textAlign: 'center',
+  },
+  textName: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
   buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: 20,
   },
   button: {
     backgroundColor: 'blue',

@@ -1,4 +1,5 @@
 import React from 'react';
+import {ActivityIndicator, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {ParamListBase} from '@react-navigation/native';
 import {
@@ -7,9 +8,11 @@ import {
   InformationScreen,
   DiagnosisScreen,
   DiagnosisDetailScreen,
+  SignInScreen,
 } from '../screens';
-import {TabScreenWrapper} from './TabScreenWrapper';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialIcons';
+import {useAuth} from '../hooks/useAuth';
+import {TabScreenWrapper} from './TabScreenWrapper';
 
 export interface RootStackParamList extends ParamListBase {
   DiagnosisTack: undefined;
@@ -95,9 +98,30 @@ const tabScreenConfigs = [
     ),
   },
 ];
+const AppNavigator = () => {
+  const {data: user, isLoading} = useAuth();
+  console.log(user?.email);
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
-const AppNavigator = () => (
-  <TabScreenWrapper tabScreenConfigs={tabScreenConfigs} />
-);
+  if (!user) {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
+    );
+  }
+
+  return <TabScreenWrapper tabScreenConfigs={tabScreenConfigs} />;
+};
 
 export default AppNavigator;

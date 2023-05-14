@@ -43,14 +43,15 @@ export const DiagnosisItem: React.FC<DiagnosisItemProps> = ({
 
 const styles = StyleSheet.create({
   item: {
-    flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingHorizontal: 10,
-    paddingVertical: 15,
     borderBottomWidth: 1,
     borderColor: '#eee',
+    borderRadius: 20,
+    flexDirection: 'row',
     marginBottom: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
     width: 350,
   },
   thumbnail: {
@@ -67,6 +68,7 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: 'bold',
     fontSize: 16,
+    color: '#555',
   },
   title: {
     fontWeight: 'bold',
