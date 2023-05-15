@@ -6,7 +6,7 @@ import {
   Text,
   Platform,
   UIManager,
-  ScrollView,
+  FlatList,
 } from 'react-native';
 import {AccordionList} from 'react-native-accordion-list-view';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialIcons';
@@ -66,8 +66,13 @@ const lesiones = [
   {
     id: 6,
     title: 'Melanoma',
-    body: 'es un tipo de cáncer de piel que se desarrolla en los melanocitos, las células que producen pigmento en la piel. Es el tipo de cáncer de piel más peligroso y puede propagarse a otras partes del cuerpo si no se trata a tiempo.',
+    body: 'Es un tipo de cáncer de piel que se desarrolla en los melanocitos, las células que producen pigmento en la piel. Es el tipo de cáncer de piel más peligroso y puede propagarse a otras partes del cuerpo si no se trata a tiempo.',
   },
+];
+
+const sections = [
+  {title: 'Lesiones de la piel', data: lesiones},
+  {title: 'Recomendaciones', data: recomendaciones},
 ];
 
 export const InformationScreen = () => {
@@ -78,50 +83,35 @@ export const InformationScreen = () => {
       }
     }
   }, []);
+
+  const renderSection = ({item}) => (
+    <View style={styles.container}>
+      <View>
+        <Text style={styles.title}>{item.title}</Text>
+      </View>
+      <AccordionList
+        data={item.data}
+        customTitle={item => <Text style={styles.subTitle}>{item.title}</Text>}
+        customBody={item => <Text style={styles.text}>{item.body}</Text>}
+        animationDuration={400}
+        customIcon={() => (
+          <MaterialCommunityIcon
+            name="keyboard-arrow-right"
+            size={30}
+            color={'black'}
+          />
+        )}
+      />
+    </View>
+  );
+
   return (
     <SafeAreaView>
-      <ScrollView>
-        <View style={styles.container}>
-          <View>
-            <Text style={styles.title}>Lesiones de la piel</Text>
-          </View>
-          <AccordionList
-            data={lesiones}
-            customTitle={item => (
-              <Text style={styles.subTitle}>{item.title}</Text>
-            )}
-            customBody={item => <Text style={styles.text}>{item.body}</Text>}
-            animationDuration={400}
-            customIcon={() => (
-              <MaterialCommunityIcon
-                name="keyboard-arrow-right"
-                size={30}
-                color={'black'}
-              />
-            )}
-          />
-        </View>
-        <View style={styles.container}>
-          <View>
-            <Text style={styles.title}>Recomendaciones</Text>
-          </View>
-          <AccordionList
-            data={recomendaciones}
-            customTitle={item => (
-              <Text style={styles.subTitle}>{item.title}</Text>
-            )}
-            customBody={item => <Text style={styles.text}>{item.body}</Text>}
-            animationDuration={400}
-            customIcon={() => (
-              <MaterialCommunityIcon
-                name="keyboard-arrow-right"
-                size={30}
-                color={'black'}
-              />
-            )}
-          />
-        </View>
-      </ScrollView>
+      <FlatList
+        data={sections}
+        renderItem={renderSection}
+        keyExtractor={(item, index) => index.toString()}
+      />
     </SafeAreaView>
   );
 };
@@ -130,7 +120,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: '2%',
     paddingHorizontal: '3%',
-    height: 480,
+    // height: 480,
     backgroundColor: '#e7e7e7',
   },
   title: {
@@ -145,7 +135,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
   },
-
   text: {
     fontSize: 15,
     textAlign: 'justify',

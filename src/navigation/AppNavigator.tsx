@@ -100,7 +100,7 @@ const tabScreenConfigs = [
 ];
 const AppNavigator = () => {
   const {data: user, isLoading} = useAuth();
-  console.log(user?.email);
+  // console.log(user?.email);
   if (isLoading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
