@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {useAuth} from '../../hooks/useAuth';
-
+// import MaterialCommunityIcon from 'react-native-vector-icons/MaterialIcons';
 export const SignInScreen = () => {
   const {signInWithGoogle} = useAuth();
 
@@ -29,6 +29,6 @@ export const SignInScreen = () => {
 
 const styles = StyleSheet.create({
   container: {flex: 1, justifyContent: 'center', alignItems: 'center'},
-  text: {fontSize: 20, fontWeight: 'bold', textAlign: 'center'},
+  text: {fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'black'},
   button: {width: 200, marginHorizontal: 20, marginVertical: 10},
 });

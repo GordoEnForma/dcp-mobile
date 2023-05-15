@@ -1,11 +1,10 @@
-export interface DiagnosisData {
-  id: string;
-  state: 'Pendiente' | 'Completado';
-  created_at: Date;
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+export interface Diagnosis {
+  id?: string;
+  state: string;
+  result: string;
+  probability: number;
+  severity: string;
   photo_url: string;
-  diagnosis?: {
-    result: string;
-    probability: number;
-    severity: string;
-  };
+  created_at: FirebaseFirestoreTypes.Timestamp;
 }

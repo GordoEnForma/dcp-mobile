@@ -74,7 +74,7 @@ const tabScreenConfigs = [
     ),
   },
   {
-    name: 'Information',
+    name: 'Información',
     component: InformationScreen,
     label: 'Información',
     icon: (props: {focused: boolean; color: string; size: number}) => (
@@ -86,7 +86,7 @@ const tabScreenConfigs = [
     ),
   },
   {
-    name: 'User',
+    name: 'Tú Perfil',
     component: UserScreen,
     label: 'Configuración',
     icon: (props: {focused: boolean; color: string; size: number}) => (
