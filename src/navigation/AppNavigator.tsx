@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -41,7 +42,7 @@ const DiagnosisStack = () => (
       name="DiagnosisDetailPage"
       component={DiagnosisDetailScreen}
       options={{
-        headerTitle: 'Detalle de Diagnóstico',
+        headerTitle: 'Detalle del Diagnóstico',
         headerBackTitle: 'Diagnósticos',
       }}
     />

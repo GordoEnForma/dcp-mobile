@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
@@ -15,17 +16,13 @@ import {
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialIcons';
 import {useAuth} from '../../hooks/useAuth';
 import {uploadImageToStorage} from '../../services/storageServices';
-import {
-  getDiagnosisFromServer,
-  createDiagnosisInFirestore,
-} from '../../services/diagnosisService';
-import {useDiagnostics} from '../../hooks';
-import {Diagnosis} from '../../types/diagnosis';
+import {getDiagnosisFromServer} from '../../services/diagnosisService';
+// import {useDiagnostics} from '../../hooks';
 
 export const HomeScreen = () => {
   const {data: user} = useAuth();
   const [isLoading, setIsLoading] = React.useState(false);
-  const {mutateDiagnostics} = useDiagnostics();
+  // const {mutateDiagnostics} = useDiagnostics();
   const options: CameraOptions = {
     mediaType: 'photo' as MediaType,
     quality: 1,
@@ -47,7 +44,7 @@ export const HomeScreen = () => {
           const diagnosis = await getDiagnosisFromServer(photoUrl);
           // await createDiagnosisInFirestore(user?.uid || '', diagnosis);
           console.log(diagnosis);
-          mutateDiagnostics.mutateAsync(diagnosis);
+          // mutateDiagnostics.mutateAsync(diagnosis);
           setIsLoading(false);
         } catch (error) {
           setIsLoading(false);
@@ -74,7 +71,7 @@ export const HomeScreen = () => {
           const diagnosis = await getDiagnosisFromServer(photoUrl);
           // await createDiagnosisInFirestore(user?.uid || '', diagnosis);
           console.log(diagnosis);
-          mutateDiagnostics.mutateAsync(diagnosis);
+          // mutateDiagnostics.mutateAsync(diagnosis);
           setIsLoading(false);
         } catch (error) {
           setIsLoading(false);
