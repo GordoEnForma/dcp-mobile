@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  ToastAndroid,
 } from 'react-native';
 import {
   launchCamera,
@@ -13,16 +14,18 @@ import {
   MediaType,
   CameraOptions,
 } from 'react-native-image-picker';
+import {useNavigation} from '@react-navigation/native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialIcons';
 import {useAuth} from '../../hooks/useAuth';
 import {uploadImageToStorage} from '../../services/storageServices';
 import {getDiagnosisFromServer} from '../../services/diagnosisService';
-// import {useDiagnostics} from '../../hooks';
+import {useDiagnostics} from '../../hooks';
 
 export const HomeScreen = () => {
   const {data: user} = useAuth();
   const [isLoading, setIsLoading] = React.useState(false);
-  // const {mutateDiagnostics} = useDiagnostics();
+  const navigation = useNavigation();
+  const {mutateDiagnostics} = useDiagnostics();
   const options: CameraOptions = {
     mediaType: 'photo' as MediaType,
     quality: 1,
@@ -44,8 +47,11 @@ export const HomeScreen = () => {
           const diagnosis = await getDiagnosisFromServer(photoUrl);
           // await createDiagnosisInFirestore(user?.uid || '', diagnosis);
           console.log(diagnosis);
-          // mutateDiagnostics.mutateAsync(diagnosis);
-          setIsLoading(false);
+          mutateDiagnostics.mutateAsync(diagnosis).then(() => {
+            setIsLoading(false);
+            navigation.navigate('Diagnosticos', {screen: 'DiagnosisList'});
+            ToastAndroid.show('Diagnóstico creado', ToastAndroid.SHORT);
+          });
         } catch (error) {
           setIsLoading(false);
           console.log(error);
@@ -71,8 +77,11 @@ export const HomeScreen = () => {
           const diagnosis = await getDiagnosisFromServer(photoUrl);
           // await createDiagnosisInFirestore(user?.uid || '', diagnosis);
           console.log(diagnosis);
-          // mutateDiagnostics.mutateAsync(diagnosis);
-          setIsLoading(false);
+          mutateDiagnostics.mutateAsync(diagnosis).then(() => {
+            setIsLoading(false);
+            navigation.navigate('Diagnosticos', {screen: 'DiagnosisList'});
+            ToastAndroid.show('Diagnóstico creado', ToastAndroid.SHORT);
+          });
         } catch (error) {
           setIsLoading(false);
           console.log(error);

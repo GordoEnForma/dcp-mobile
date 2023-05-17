@@ -49,6 +49,11 @@ export const createDiagnosisInFirestore = async (
   userId: string,
   diagnosis: Diagnosis,
 ) => {
-  const userRef = firestore().collection('users').doc(userId);
-  await userRef.collection('diagnostics').add(diagnosis);
+  try {
+    const userRef = firestore().collection('users').doc(userId);
+    console.log('Creanding el diagnostico en firestore');
+    await userRef.collection('diagnostics').add(diagnosis);
+  } catch (e) {
+    console.log(e);
+  }
 };

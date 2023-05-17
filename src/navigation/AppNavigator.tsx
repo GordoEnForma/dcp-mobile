@@ -100,17 +100,10 @@ const tabScreenConfigs = [
   },
 ];
 const AppNavigator = () => {
-  const {data: user, isLoading} = useAuth();
+  const {data: user, isLoading, isError} = useAuth();
   // console.log(user?.email);
-  if (isLoading) {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
 
-  if (!user) {
+  if (!user && !isLoading && !isError) {
     return (
       <Stack.Navigator>
         <Stack.Screen
@@ -119,6 +112,13 @@ const AppNavigator = () => {
           options={{headerShown: false}}
         />
       </Stack.Navigator>
+    );
+  }
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
     );
   }
 

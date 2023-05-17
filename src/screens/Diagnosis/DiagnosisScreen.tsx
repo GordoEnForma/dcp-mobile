@@ -67,11 +67,12 @@ export const DiagnosisScreen: React.FC = () => {
     ({item}) => (
       <DiagnosisItem
         diagnosis={item}
-        onPress={() =>
-          navigation.navigate('DiagnosisDetailPage', {diagnosisId: item.id})
-        }
+        onPress={() => {
+          navigation.navigate('DiagnosisDetailPage', {diagnosisId: item.id});
+        }}
       />
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [navigation],
   );
 
@@ -84,39 +85,48 @@ export const DiagnosisScreen: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Filtrar por:</Text>
-      <Picker
-        selectedValue={filter}
-        style={styles.picker}
-        onValueChange={onFilterChange}>
-        <Picker.Item label="Todos" value="Todos" />
-        <Picker.Item label="Pendientes" value="Pendiente" />
-        <Picker.Item label="Completados" value="Completado" />
-      </Picker>
-      {filter === 'Completado' && (
-        <>
-          <Text style={styles.label}>Ordenar por:</Text>
+    <>
+      {filteredDiagnosisData && filteredDiagnosisData.length === 0 ? (
+        <View style={styles.notDiagnosticsContainer}>
+          <Text style={styles.notDiagnosticsLabel}>
+            No hay diagnósticos que mostrar por ahora
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <Text style={styles.label}>Filtrar por:</Text>
           <Picker
-            selectedValue={sortKey}
+            selectedValue={filter}
             style={styles.picker}
-            onValueChange={itemValue => setSortKey(itemValue)}>
-            <Picker.Item label="Fecha" value="created_at" />
-            <Picker.Item label="Severidad" value="severity" />
-            {/* <Picker.Item label="Probabilidad" value="probability" /> */}
+            onValueChange={onFilterChange}>
+            <Picker.Item label="Todos" value="Todos" />
+            <Picker.Item label="Pendientes" value="Pendiente" />
+            <Picker.Item label="Completados" value="Completado" />
           </Picker>
-        </>
+          {filter === 'Completado' && (
+            <>
+              <Text style={styles.label}>Ordenar por:</Text>
+              <Picker
+                selectedValue={sortKey}
+                style={styles.picker}
+                onValueChange={itemValue => setSortKey(itemValue)}>
+                <Picker.Item label="Fecha" value="created_at" />
+                <Picker.Item label="Severidad" value="severity" />
+                {/* <Picker.Item label="Probabilidad" value="probability" /> */}
+              </Picker>
+            </>
+          )}
+          <FlatList
+            // data={filteredDiagnosisData}
+            // data={filteredDiagnosisData}
+            style={styles.list}
+            data={filteredDiagnosisData as Diagnosis[]}
+            renderItem={renderItem}
+            keyExtractor={item => item.id || ''}
+          />
+        </View>
       )}
-
-      <FlatList
-        // data={filteredDiagnosisData}
-        // data={filteredDiagnosisData}
-        style={styles.list}
-        data={filteredDiagnosisData as Diagnosis[]}
-        renderItem={renderItem}
-        keyExtractor={item => item.id || ''}
-      />
-    </View>
+    </>
   );
 };
 
@@ -127,6 +137,19 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     gap: 10,
   },
+  notDiagnosticsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notDiagnosticsLabel: {
+    marginLeft: 20,
+    fontSize: 25,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'black',
+  },
+
   label: {
     marginLeft: 20,
     fontSize: 15,
@@ -137,6 +160,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    opacity: 0.5,
   },
   picker: {
     alignSelf: 'flex-start',
@@ -148,6 +172,7 @@ const styles = StyleSheet.create({
     width: 200,
   },
   list: {
+    // backgroundColor: 'red',
     marginLeft: 20,
   },
 });

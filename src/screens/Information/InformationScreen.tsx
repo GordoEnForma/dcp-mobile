@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable react/no-unstable-nested-components */
 import React, {useEffect} from 'react';
 import {
   View,
@@ -7,6 +9,7 @@ import {
   Platform,
   UIManager,
   FlatList,
+  ListRenderItemInfo,
 } from 'react-native';
 import {AccordionList} from 'react-native-accordion-list-view';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialIcons';
@@ -84,7 +87,12 @@ export const InformationScreen = () => {
     }
   }, []);
 
-  const renderSection = ({item}) => (
+  const renderSection = ({
+    item,
+  }: ListRenderItemInfo<{
+    title: string;
+    data: {id: number; title: string; body: string}[];
+  }>) => (
     <View style={styles.container}>
       <View>
         <Text style={styles.title}>{item.title}</Text>
